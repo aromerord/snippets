@@ -3,13 +3,14 @@ package com.snippet.service.impl;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.snippet.converter.UserConverter;
+import com.snippet.dto.PostDto;
 import com.snippet.dto.UserDto;
 import com.snippet.entity.User;
 import com.snippet.exception.ConflictException;
@@ -24,12 +25,13 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	@Autowired
+	private ModelMapper mapper;
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		
 		User user = userRepository.findByEmail(email);
-
 		if (user == null) {
 			throw new UsernameNotFoundException(email);
 		}
@@ -39,13 +41,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto findUserByEmail(String email) {
-
 		User user = userRepository.findByEmail(email);
-
 		if (user == null) {
 			throw new UsernameNotFoundException(email);
 		}
-		return UserConverter.user2UserDto(user);
+		return mapper.map(user, UserDto.class);
 	}
 
 	@Override
@@ -60,8 +60,8 @@ public class UserServiceImpl implements UserService {
 		userDto.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
 
 		UserDto savedUserDto = null;
-		User user = userRepository.save(UserConverter.userDto2User(userDto));
-		savedUserDto = UserConverter.user2UserDto(user);
+		User user = userRepository.save(mapper.map(userDto, User.class));
+		savedUserDto = mapper.map(user, UserDto.class);
 		return savedUserDto;
 	}
 

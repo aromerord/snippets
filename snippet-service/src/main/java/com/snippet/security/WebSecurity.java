@@ -24,7 +24,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests()
-		.antMatchers(HttpMethod.POST, "/users").permitAll() // Rutas públicas	
+		.antMatchers(HttpMethod.POST, "/users").permitAll() // Rutas públicas
+		.antMatchers(HttpMethod.GET, "/posts/recent").permitAll()
+		.antMatchers(HttpMethod.GET, "/posts/{postId}").permitAll()
 		.anyRequest().authenticated() // El resto requiere autenticación
 		.and()
 		.addFilter(getAuthenticationFilter()) // Filtro de autenticación
