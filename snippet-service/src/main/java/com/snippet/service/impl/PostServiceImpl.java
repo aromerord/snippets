@@ -57,7 +57,7 @@ public class PostServiceImpl implements PostService{
 	public PostDto findPostByPostId(String postId) {
 		Post post = postRepository.findPostByPostId(postId);
 		if(post == null) {
-			throw new NotFoundException("El post con id" + postId + "no existe en la base de datos");
+			throw new NotFoundException("El post con id " + postId + " no existe en la base de datos");
 		} else {
 			if(post.getExposure().equals(ExposureEnum.PRIVATE)) {
 				Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

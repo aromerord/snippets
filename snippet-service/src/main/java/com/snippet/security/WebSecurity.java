@@ -23,10 +23,11 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests()
+		http.cors().and().csrf().disable().authorizeRequests()
 		.antMatchers(HttpMethod.POST, "/users").permitAll() // Rutas públicas
 		.antMatchers(HttpMethod.GET, "/posts/recent").permitAll()
 		.antMatchers(HttpMethod.GET, "/posts/{postId}").permitAll()
+		.antMatchers(AUTH_WHITELIST).permitAll()
 		.anyRequest().authenticated() // El resto requiere autenticación
 		.and()
 		.addFilter(getAuthenticationFilter()) // Filtro de autenticación
@@ -52,7 +53,21 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 		return filter;
 	}
 	
-	
-	
+	/**
+	 * Rutas de Swagger
+	 */
+    private static final String[] AUTH_WHITELIST = {
+            // -- Swagger UI v2
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            // -- Swagger UI v3
+            "/v3/api-docs/**",
+            "/swagger-ui/**"
+    };
 	
 }

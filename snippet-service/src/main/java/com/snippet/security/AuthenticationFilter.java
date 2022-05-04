@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.snippet.component.ApplicationContextComponent;
 import com.snippet.constant.SecurityConstant;
 import com.snippet.dto.UserDto;
+import com.snippet.exception.UnauthorizedException;
 import com.snippet.service.UserService;
 
 import io.jsonwebtoken.Jwts;
@@ -54,7 +55,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 					userDto.getPassword(), new ArrayList<>()));
 			
 		} catch (IOException io) {
-			throw new RuntimeException(io);
+			throw new UnauthorizedException("Los datos del usuario no son correctos.");
 		}
 	}
 
@@ -73,12 +74,17 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 				.signWith(SignatureAlgorithm.HS512, SecurityConstant.TOKEN_SECRET).compact();
 		
 		// Se añade el token al header de la petición
-		response.addHeader(SecurityConstant.HEADER_STRING, SecurityConstant.TOKEN_PREFIX + token);
+		response.addHeader(SecurityConstant.AUTHORIZATION, "Bearer " + token);
 		
 		// Se añade tambien al header el id público del usuario
 		UserService userService = (UserService) ApplicationContextComponent.getBean("userServiceImpl");
 		UserDto userDto = userService.findUserByEmail(username);
-		response.addHeader("UserId", userDto.getUserId());
+		response.addHeader(SecurityConstant.USER_ID, userDto.getUserId());
+		
+		/* La cabecera de respuesta Access-Control-Expose-Headers indica qué cabeceras 
+		pueden ser expuestas como parte de la respuesta listando sus nombres.*/
+		response.addHeader(SecurityConstant.ACCESS_CONTROL_EXPOSE_HEADERS, "Authorization, UserId");
+		
 	}
 
 }

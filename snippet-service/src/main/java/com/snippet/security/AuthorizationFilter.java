@@ -41,10 +41,10 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
 			throws IOException, ServletException {
 		
 		// Se extrae el token y se comprueba si tiene el prefijo Bearer.
-		String header = request.getHeader(SecurityConstant.HEADER_STRING);
+		String header = request.getHeader(SecurityConstant.AUTHORIZATION);
 		
 		// Si el token no existe o no fue generado por JWT, se termina el procesamiento
-		if (header == null || !header.startsWith(SecurityConstant.TOKEN_PREFIX)) {
+		if (header == null || !header.startsWith(SecurityConstant.BEARER)) {
 			// y se continua con el flujo de Spring llamando a este método
 			chain.doFilter(request, response);
 			return;
@@ -69,11 +69,11 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
 	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
 		
 		// Se obtiene el token de la request
-		String token = request.getHeader(SecurityConstant.HEADER_STRING);
+		String token = request.getHeader(SecurityConstant.AUTHORIZATION);
 		
 		if (token != null) {
 			String user = Jwts.parser().setSigningKey(SecurityConstant.TOKEN_SECRET) // Revisa la key del token
-					.parseClaimsJws(token.replace(SecurityConstant.TOKEN_PREFIX, ""))
+					.parseClaimsJws(token.replace(SecurityConstant.BEARER, ""))
 					.getBody().getSubject();
 			if (user != null) {
 				return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
