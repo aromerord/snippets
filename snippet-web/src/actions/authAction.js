@@ -1,6 +1,6 @@
 import axios from "axios";
 import jwt_decode from 'jwt-decode';
-import { LOGIN_ENDPOINT } from "../helpers/endpoints";
+import { LOGIN_ENDPOINT, REGISTER_ENDPOINT } from "../constants/endpoints";
 import { setTokenAxios } from "../helpers/helpers";
 import { setStateAuthReducer } from "../reducers/authReducer";
 
@@ -50,4 +50,22 @@ export const logoutAction = () => dispatch => {
     // Se elimina el usuario del state
     const state = setStateAuthReducer({ user: {}, login: false })
     dispatch(state);
+}
+
+/**
+ * Acción de login para el authReducer
+ */
+ export const registerAction = (user) => dispatch => {
+
+    return new Promise((resolve, reject)=>{
+        axios.post(REGISTER_ENDPOINT, user, {
+            headers: { 'Accept' : 'application/json', 'ContentType': 'application/json' }
+        }).then(response => {
+
+            resolve(response);
+            
+        }).catch(error =>{
+            reject(error);
+        })
+    });
 }

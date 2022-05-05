@@ -27,10 +27,10 @@ export const Login = () => {
     let errors = {}
 
     if (!validator.isEmail(email)) {
-      errors.email = "El correo electrónico no es válido.";
+      errors.email = "El email no es válido.";
     }
     if (validator.isEmpty(password)) {
-      errors.password = "La contraseña no puede estar vacía";
+      errors.password = "La contraseña no puede estar vacía.";
     }
 
     if (isObjectEmpty(errors)) {
@@ -42,8 +42,9 @@ export const Login = () => {
 
       dispatch(loginAction(user)).then(response => {
         
+        
       }).catch(error => {
-        errors.auth = "Los datos del usuario no son correctos";
+        errors.auth = "Los datos del usuario no son correctos.";
         setErrors(errors);
       });
 

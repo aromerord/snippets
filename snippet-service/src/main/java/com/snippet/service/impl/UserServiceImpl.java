@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.snippet.dto.PostDto;
 import com.snippet.dto.UserDto;
 import com.snippet.entity.User;
 import com.snippet.exception.ConflictException;
