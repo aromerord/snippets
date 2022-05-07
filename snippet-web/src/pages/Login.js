@@ -41,8 +41,8 @@ export const Login = () => {
       }
 
       dispatch(loginAction(user)).then(response => {
-        
-        
+
+
       }).catch(error => {
         errors.auth = "Los datos del usuario no son correctos.";
         setErrors(errors);
@@ -55,53 +55,46 @@ export const Login = () => {
   }
 
   return (
-    <Container className="mt-5">
-      <Row>
-        <Col sm="12" md={{ span: 8, offset: 2 }} lg={{ span: 6, offset: 3 }}>
-          <Card body>
-            {errors.auth && <Alert variant="danger">{errors.auth}</Alert>}
+    <Container className='d-flex justify-content-center align-items-center' style={{ 'minHeight': '80vh' }}>
 
-            <h3>Iniciar sesión</h3>
+      {errors.auth && <Alert variant="danger">{errors.auth}</Alert>}
 
-            <Form onSubmit={handleSubmit}>
-              <Form.Group control="email">
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  type='email'
-                  placeholder='Email'
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  isInvalid={errors?.email} />
-                <Form.Control.Feedback type="invalid">
-                  {errors?.email}
-                </Form.Control.Feedback>
-              </Form.Group>
+      <Form onSubmit={handleSubmit} style={{ 'width': '400px' }}>
+        <h4 className='text-center mb-3'>Iniciar sesión</h4>
+        <Form.Group control="email">
+          <Form.Control
+            type='email'
+            placeholder='Email'
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            isInvalid={errors?.email} />
+          <Form.Control.Feedback type="invalid">
+            {errors?.email}
+          </Form.Control.Feedback>
+        </Form.Group>
 
-              <Form.Group control="password" className='mt-3'>
-                <Form.Label>Contraseña</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder='Contraseña'
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                  isInvalid={errors?.password} />
-                <Form.Control.Feedback type="invalid">
-                  {errors?.password}
-                </Form.Control.Feedback>
-              </Form.Group>
+        <Form.Group control="password" className='mt-3'>
+          <Form.Control
+            type="password"
+            placeholder='Contraseña'
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            isInvalid={errors?.password} />
+          <Form.Control.Feedback type="invalid">
+            {errors?.password}
+          </Form.Control.Feedback>
+        </Form.Group>
 
-              <div className='mt-3 text-end'>
-                <Button variant="primary" type="submit" className="mt-1">Iniciar sesión</Button>
-              </div>
+        <div className='mt-3 d-grid gap-2'>
+          <Button variant="primary" type="submit" className="mt-1">Iniciar sesión</Button>
+        </div>
 
-              <div className='mt-3'>
-                <Link to={"/registro"}>¿No tienes una cuenta? Regístrate aquí.</Link>
-              </div>
+        <div className='mt-3 text-center'>
+          ¿No tienes una cuenta?  <Link to={"/registro"}>Regístrate.</Link>
+        </div>
 
-            </Form>
-          </Card>
-        </Col>
-      </Row>
+      </Form>
+
     </Container>
 
   )

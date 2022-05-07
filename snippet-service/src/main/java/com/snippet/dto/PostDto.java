@@ -3,8 +3,6 @@ package com.snippet.dto;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.snippet.enums.ExposureEnum;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,9 +19,10 @@ public class PostDto implements Serializable {
 	private Long id;
 	private String postId;
 	private String title;
+	private String description;
 	private String content;
 	private Date createdAt;
 	private UserDto user;
-	private ExposureEnum exposure;
+	private String exposure;
 
 }

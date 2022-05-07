@@ -16,7 +16,6 @@ import javax.persistence.Table;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import com.snippet.enums.ExposureEnum;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -44,6 +43,9 @@ public class Post implements Serializable {
 
 	@Column(name = "TITLE", nullable = false, length = 255)
 	private String title;
+	
+	@Column(name = "DESCRIPTION", nullable = true)
+	private String description;
 
 	@Column(name = "CONTENT", nullable = false, columnDefinition = "TEXT")
 	private String content;
@@ -56,6 +58,7 @@ public class Post implements Serializable {
 	@JoinColumn(name="USER_ID")
 	private User user;
 	
-	private ExposureEnum exposure;
+	@Column(name = "EXPOSURE")
+	private String exposure;
 
 }

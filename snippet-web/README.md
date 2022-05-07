@@ -24,3 +24,6 @@
 - Extensiones de Chrome: 
 `React Developer Tools`
 `Redux DevTools`
+
+- Formateo de fechas 
+`npm install moment --save`

@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.snippet.entity.Post;
-import com.snippet.enums.ExposureEnum;
 
 @Repository
 public interface PostRepository extends CrudRepository<Post, Long>{
@@ -17,7 +16,7 @@ public interface PostRepository extends CrudRepository<Post, Long>{
 	
 	@Query(value="SELECT * FROM post p WHERE p.exposure = :exposure ORDER BY created_at LIMIT 20", 
 			nativeQuery = true)
-	public List<Post> recentPosts(@Param("exposure") ExposureEnum exposure);
+	public List<Post> recentPosts(@Param("exposure") String exposure);
 	
 	public Post findPostByPostId(String postId);
 }

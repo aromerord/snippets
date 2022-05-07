@@ -1,8 +1,9 @@
-import React from 'react'
-import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap'
+import React from 'react';
+import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom'
 import { logoutAction } from '../actions/authAction';
+
 
 export const Navigation = () => {
 
@@ -11,14 +12,19 @@ export const Navigation = () => {
   const dispatch = useDispatch();
 
   return (
-    <Navbar bg="dark" variant="dark" expand="lg">
+    <Navbar bg="primary" variant="dark" expand="lg">
       <Container>
-        <Navbar.Brand as={NavLink} to={'/'}>Snippets</Navbar.Brand>
+        <Navbar.Brand as={NavLink} to={'/'} className="title">
+          Snippets
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="menu" />
         <Navbar.Collapse id="menu">
-            <Nav className="me-auto">
-              <Nav.Link as={NavLink} to={'/'}>Home</Nav.Link>
-            </Nav>
+          <Nav className="me-auto">
+            <Nav.Link as={NavLink} to={'/'}>Home</Nav.Link>
+            {login &&
+              <Nav.Link as={NavLink} to={'/posts'}>Posts</Nav.Link>
+            }
+          </Nav>
           <Nav>
             {!login ?
               <>
@@ -27,8 +33,7 @@ export const Navigation = () => {
               </>
               :
               <NavDropdown title={user.sub} id="dropdown">
-                <NavDropdown.Item as={NavLink} to={'/posts'}>Posts</NavDropdown.Item>
-                <NavDropdown.Item onClick={()=>dispatch(logoutAction())}>Cerrar sesión</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => dispatch(logoutAction())}>Cerrar sesión</NavDropdown.Item>
               </NavDropdown>}
           </Nav>
         </Navbar.Collapse>

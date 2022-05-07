@@ -41,7 +41,7 @@ export const Register = () => {
     if (validator.isEmpty(password)) {
       errors.password = "La contraseña no puede estar vacía.";
     }
-    if (!validator.isLength(password, {min: 8, max: 30})) {
+    if (!validator.isLength(password, { min: 8, max: 30 })) {
       errors.password = "La contraseña debe tener entre 8 y 30 caracteres.";
     }
 
@@ -61,7 +61,7 @@ export const Register = () => {
           email: email,
           password: password
         }
-        
+
         dispatch(loginAction(user))
 
       }).catch(error => {
@@ -76,80 +76,69 @@ export const Register = () => {
   }
 
   return (
-    <Container className="mt-5 mb-5">
-      <Row>
-        <Col sm="12" md={{ span: 8, offset: 2 }} lg={{ span: 6, offset: 3 }}>
-          <Card body>
-            {errors.register && <Alert variant="danger">{errors.register}</Alert>}
+    <Container className='d-flex justify-content-center align-items-center' style={{ 'minHeight': '80vh' }}>
 
-            <h3>Crear cuenta</h3>
+      {errors.register && <Alert variant="danger">{errors.register}</Alert>}
 
-            <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit} style={{ 'width': '400px' }}>
+        <h4 className='text-center mb-3'>Crear cuenta</h4>
+        <Form.Group control="name">
+          <Form.Control
+            type='text'
+            placeholder='Nombre'
+            value={firstName}
+            onChange={e => setFirstName(e.target.value)}
+            isInvalid={errors?.firstName} />
+          <Form.Control.Feedback type="invalid">
+            {errors?.firstName}
+          </Form.Control.Feedback>
+        </Form.Group>
 
-              <Form.Group control="name">
-                <Form.Label>Nombre</Form.Label>
-                <Form.Control
-                  type='text'
-                  placeholder='Nombre'
-                  value={firstName}
-                  onChange={e => setFirstName(e.target.value)}
-                  isInvalid={errors?.firstName} />
-                <Form.Control.Feedback type="invalid">
-                  {errors?.firstName}
-                </Form.Control.Feedback>
-              </Form.Group>
+        <Form.Group control="surname" className='mt-3'>
+          <Form.Control
+            type='text'
+            placeholder='Apellidos'
+            value={lastName}
+            onChange={e => setLastName(e.target.value)}
+            isInvalid={errors?.lastName} />
+          <Form.Control.Feedback type="invalid">
+            {errors?.lastName}
+          </Form.Control.Feedback>
+        </Form.Group>
 
-              <Form.Group control="surname" className='mt-3'>
-                <Form.Label>Apellidos</Form.Label>
-                <Form.Control
-                  type='text'
-                  placeholder='Apellidos'
-                  value={lastName}
-                  onChange={e => setLastName(e.target.value)}
-                  isInvalid={errors?.lastName} />
-                <Form.Control.Feedback type="invalid">
-                  {errors?.lastName}
-                </Form.Control.Feedback>
-              </Form.Group>
+        <Form.Group control="email" className='mt-3'>
+          <Form.Control
+            type='email'
+            placeholder='Email'
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            isInvalid={errors?.email} />
+          <Form.Control.Feedback type="invalid">
+            {errors?.email}
+          </Form.Control.Feedback>
+        </Form.Group>
 
-              <Form.Group control="email" className='mt-3'>
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  type='email'
-                  placeholder='Email'
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  isInvalid={errors?.email} />
-                <Form.Control.Feedback type="invalid">
-                  {errors?.email}
-                </Form.Control.Feedback>
-              </Form.Group>
+        <Form.Group control="password" className='mt-3'>
+          <Form.Control
+            type="password"
+            placeholder='Contraseña'
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            isInvalid={errors?.password} />
+          <Form.Control.Feedback type="invalid">
+            {errors?.password}
+          </Form.Control.Feedback>
+        </Form.Group>
 
-              <Form.Group control="password" className='mt-3'>
-                <Form.Label>Contraseña</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder='Contraseña'
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                  isInvalid={errors?.password} />
-                <Form.Control.Feedback type="invalid">
-                  {errors?.password}
-                </Form.Control.Feedback>
-              </Form.Group>
+        <div className='mt-3 d-grid gap-2'>
+          <Button variant="primary" type="submit" className="mt-1">Crear cuenta</Button>
+        </div>
 
-              <div className='mt-3 text-end'>
-                <Button variant="primary" type="submit" className="mt-1">Crear cuenta</Button>
-              </div>
+        <div className='mt-3 text-center'>
+          ¿Ya te has registrado?<Link to={"/login"}> Inicia sesión.</Link>
+        </div>
+      </Form>
 
-              <div className='mt-3'>
-                <Link to={"/login"}>¿Ya te has registrado? Inicia sesión aquí.</Link>
-              </div>
-
-            </Form>
-          </Card>
-        </Col>
-      </Row>
     </Container>
 
   )

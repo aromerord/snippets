@@ -28,25 +28,25 @@ public class PostController {
 	
 	@Autowired
 	private PostService postService;
-
-	@ApiOperation(value = "Obtener todos los posts del usuario", response = PostDto.class)
+	
+	@ApiOperation(value = "Obtener los últimos posts públicos", response = PostDto.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "La solicitud ha tenido éxito."),
 			@ApiResponse(code = 400, message = "El servidor no pudo interpretar la solicitud."),
 			@ApiResponse(code = 404, message = "Recurso no encontrado."),
 			@ApiResponse(code = 500, message = "Error interno del servidor."), })
 	@GetMapping
-	public ResponseEntity<List<PostDto>> findAllPostsByUser() {
-		return new ResponseEntity<>(postService.findAllPostsByUser(), HttpStatus.OK);
+	public ResponseEntity<List<PostDto>> recentPosts() {
+		return new ResponseEntity<>(postService.recentPosts(), HttpStatus.OK);
 	}
 
-	@ApiOperation(value = "Obtener los últimos posts", response = PostDto.class)
+	@ApiOperation(value = "Obtener todos los posts de un usuario", response = PostDto.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "La solicitud ha tenido éxito."),
 			@ApiResponse(code = 400, message = "El servidor no pudo interpretar la solicitud."),
 			@ApiResponse(code = 404, message = "Recurso no encontrado."),
 			@ApiResponse(code = 500, message = "Error interno del servidor."), })
-	@GetMapping("/recent")
-	public ResponseEntity<List<PostDto>> recentPosts() {
-		return new ResponseEntity<>(postService.recentPosts(), HttpStatus.OK);
+	@GetMapping("/postsByUser")
+	public ResponseEntity<List<PostDto>> findAllPostsByUser() {
+		return new ResponseEntity<>(postService.findAllPostsByUser(), HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "Obtener post por el postId", response = PostDto.class)
@@ -58,7 +58,6 @@ public class PostController {
 	public ResponseEntity<PostDto> findPostByPostId(@PathVariable String postId) {
 		return new ResponseEntity<>(postService.findPostByPostId(postId), HttpStatus.OK);
 	}
-	
 
 	@ApiOperation(value = "Crear post", response = PostDto.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "La solicitud ha tenido éxito."),

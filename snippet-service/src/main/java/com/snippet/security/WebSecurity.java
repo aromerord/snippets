@@ -25,7 +25,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable().authorizeRequests()
 		.antMatchers(HttpMethod.POST, "/users").permitAll() // Rutas públicas
-		.antMatchers(HttpMethod.GET, "/posts/recent").permitAll()
+		.antMatchers(HttpMethod.GET, "/posts").permitAll()
 		.antMatchers(HttpMethod.GET, "/posts/{postId}").permitAll()
 		.antMatchers(AUTH_WHITELIST).permitAll()
 		.anyRequest().authenticated() // El resto requiere autenticación

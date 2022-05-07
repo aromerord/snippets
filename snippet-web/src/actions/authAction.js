@@ -53,7 +53,7 @@ export const logoutAction = () => dispatch => {
 }
 
 /**
- * Acción de login para el authReducer
+ * Acción de registro para el authReducer
  */
  export const registerAction = (user) => dispatch => {
 
