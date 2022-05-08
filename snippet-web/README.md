@@ -27,3 +27,6 @@
 
 - Formateo de fechas 
 `npm install moment --save`
+
+- Formateo de código
+`npm install react-syntax-highlighter --save`

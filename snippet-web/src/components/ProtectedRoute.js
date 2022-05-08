@@ -9,6 +9,6 @@ export const ProtectedRoute = ({ component: Component }) => {
     return (login ?
         <Component> </Component>
         :
-        <Navigate to="/" />
+        <Navigate to='/' />
     )
 }

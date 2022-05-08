@@ -15,25 +15,29 @@ export const Home = () => {
       setPosts(response.data);
       setLoading(false);
     }).catch(error => {
-      console.log(error)
       setLoading(false);
     });
   }, [])
 
   return (
     <div className='mt-3 mb-5'>
-      <h3 className='mb-3'>Últimos posts públicos</h3>
+      
 
-      <ListGroup variant="flush">
+      <ListGroup variant='flush'>
+        <ListGroupItem>
+          <h4 className='mb-3'>Últimos posts públicos</h4>
+        </ListGroupItem>
         {posts && posts.map(post => (
           <ListGroupItem key={post.postId}>
-            <div>
-              <Link to="/">{post.title}</Link>
+            <div className='pt-10'>
+              <span className='mr-10'><i className='fa-solid fa-book-bookmark icon-color'></i></span>
+              <Link to={`/post/${post.postId}`}>{post.title}</Link>
             </div>
-            <p>{post.description}</p>
-            <small className="text-muted">
-              Creado por {post.user.firstName} {post.user.lastName} {moment(post.createdAt).fromNow()}.
-            </small>
+            <div className='ml-23 pb-10'>
+              <small className='text-muted'>
+                <span>{post.user.firstName} {post.user.lastName}</span> · Creado {moment(post.createdAt).fromNow()}
+              </small>
+            </div>
           </ListGroupItem>
         ))}
       </ListGroup>
@@ -41,3 +45,4 @@ export const Home = () => {
     </div>
   )
 }
+

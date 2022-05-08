@@ -12,14 +12,14 @@ export const Navigation = () => {
   const dispatch = useDispatch();
 
   return (
-    <Navbar bg="primary" variant="dark" expand="lg">
+    <Navbar bg='primary' variant='dark' expand='lg'>
       <Container>
-        <Navbar.Brand as={NavLink} to={'/'} className="title">
+        <Navbar.Brand as={NavLink} to={'/'} className='title'>
           Snippets
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="menu" />
-        <Navbar.Collapse id="menu">
-          <Nav className="me-auto">
+        <Navbar.Toggle aria-controls='menu' />
+        <Navbar.Collapse id='menu'>
+          <Nav className='me-auto'>
             <Nav.Link as={NavLink} to={'/'}>Home</Nav.Link>
             {login &&
               <Nav.Link as={NavLink} to={'/posts'}>Posts</Nav.Link>
@@ -32,7 +32,7 @@ export const Navigation = () => {
                 <Nav.Link as={NavLink} to={'/login'}>Iniciar sesión</Nav.Link>
               </>
               :
-              <NavDropdown title={user.sub} id="dropdown">
+              <NavDropdown title={user.sub} id='dropdown'>
                 <NavDropdown.Item onClick={() => dispatch(logoutAction())}>Cerrar sesión</NavDropdown.Item>
               </NavDropdown>}
           </Nav>

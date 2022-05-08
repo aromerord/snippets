@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const Posts = () => {
+export const UserPosts = () => {
 
   return (
     <div>Posts</div>

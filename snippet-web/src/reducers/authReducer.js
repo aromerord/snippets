@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER } from "../constants/types";
+import { SET_CURRENT_USER } from '../constants/types';
 
 const initialState = {login: false, user: {}}
 

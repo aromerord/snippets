@@ -1,8 +1,8 @@
-import axios from "axios";
+import axios from 'axios';
 import jwt_decode from 'jwt-decode';
-import { logoutAction } from "../actions/authAction";
-import { setStateAuthReducer } from "../reducers/authReducer";
-import { store } from "../store";
+import { logoutAction } from '../actions/authAction';
+import { setStateAuthReducer } from '../reducers/authReducer';
+import { store } from '../store';
 
 /**
  * Añade el token a los headers de axios
@@ -10,9 +10,9 @@ import { store } from "../store";
  */
 export const setTokenAxios = token => {
     if (token) {
-        axios.defaults.headers.common["Authorization"] = token;
+        axios.defaults.headers.common['Authorization'] = token;
     } else {
-        delete axios.defaults.headers.common["Authorization"];
+        delete axios.defaults.headers.common['Authorization'];
     }
 }
 
@@ -36,7 +36,7 @@ export const checkForToken = () => {
         const currentTime = Math.floor(Date.now() / 1000);
         if (decoded.exp < currentTime) {
             store.dispatch(logoutAction());
-            window.location.href = "/login";
+            window.location.href = '/login';
         }
 
     }
