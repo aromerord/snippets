@@ -36,7 +36,7 @@ export const checkForToken = () => {
         const currentTime = Math.floor(Date.now() / 1000);
         if (decoded.exp < currentTime) {
             store.dispatch(logoutAction());
-            window.location.href = '/login';
+            window.location.href = '/home';
         }
 
     }
@@ -47,5 +47,18 @@ export const checkForToken = () => {
  */
 export const isObjectEmpty = (obj) => {
     return Object.keys(obj).length === 0 && obj.constructor === Object;
+}
+
+/**
+ * Función para descargar ficheros
+ */
+export const downloadFile = (filename, text) => {
+    let element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
 }
 

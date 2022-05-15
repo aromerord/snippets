@@ -1,43 +1,45 @@
-import React from 'react';
-import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { AppBar, Toolbar, Typography, Button, IconButton } from '@mui/material';
+import WifiChannelIcon from '@mui/icons-material/WifiChannel';
+import { Box } from '@mui/system';
 import { logoutAction } from '../actions/authAction';
-
+import { LoginDialog } from './LoginDialog';
+import { RegisterDialog } from './RegisterDialog';
 
 export const Navigation = () => {
 
+  const [openLogin, setOpenLogin] = useState(false);
+  const [openRegister, setOpenRegister] = useState(false);
   const login = useSelector(state => state.auth.login);
   const user = useSelector(state => state.auth.user);
   const dispatch = useDispatch();
 
   return (
-    <Navbar bg='primary' variant='dark' expand='lg'>
-      <Container>
-        <Navbar.Brand as={NavLink} to={'/'} className='title'>
+    <AppBar>
+      <Toolbar>
+        <IconButton component={Link} to="/" className='cw'>
+          <WifiChannelIcon />
+        </IconButton>
+        <Typography variant="h6" component="div" >
           Snippets
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls='menu' />
-        <Navbar.Collapse id='menu'>
-          <Nav className='me-auto'>
-            <Nav.Link as={NavLink} to={'/'}>Home</Nav.Link>
-            {login &&
-              <Nav.Link as={NavLink} to={'/posts'}>Posts</Nav.Link>
-            }
-          </Nav>
-          <Nav>
-            {!login ?
-              <>
-                <Nav.Link as={NavLink} to={'/registro'}>Crear cuenta</Nav.Link>
-                <Nav.Link as={NavLink} to={'/login'}>Iniciar sesión</Nav.Link>
-              </>
-              :
-              <NavDropdown title={user.sub} id='dropdown'>
-                <NavDropdown.Item onClick={() => dispatch(logoutAction())}>Cerrar sesión</NavDropdown.Item>
-              </NavDropdown>}
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+        </Typography>
+        <Box sx={{ flexGrow: 1, ml: 2, marginTop: '5px' }}>
+          <Button component={Link} to="/" className='cw'>Home</Button>
+          {login &&
+            <Button component={Link} to="/posts" className='cw'>Posts</Button>}
+        </Box>
+        <Box sx={{ marginTop: '5px' }}>
+          {!login ?
+            <>  <Button className='cw' onClick={() => setOpenLogin(true)}>Login</Button>
+              <Button className='cw' onClick={() => setOpenRegister(true)}>Registro</Button>
+            </> :
+            <Button className='cw' onClick={() => dispatch(logoutAction())}>Cerrar sesión</Button>}
+        </Box>
+      </Toolbar>
+      <LoginDialog openLogin={openLogin} setOpenLogin={setOpenLogin} />
+      <RegisterDialog openRegister={openRegister} setOpenRegister={setOpenRegister} />
+    </AppBar>
   )
 }

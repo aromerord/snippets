@@ -2,8 +2,9 @@
 
 ## Instalaciones
 
-- Bootstrap
-`npm install react-bootstrap bootstrap` 
+- Material UI
+`npm install @mui/material @emotion/react @emotion/styled`
+`npm install @mui/icons-material`
 
 - Rutas
 `npm install react-router-dom` 
@@ -30,3 +31,6 @@
 
 - Formateo de código
 `npm install react-syntax-highlighter --save`
+
+- Copiar texto al portapapeles
+`react-copy-to-clipboard`
