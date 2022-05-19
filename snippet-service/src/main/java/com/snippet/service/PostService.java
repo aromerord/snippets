@@ -7,6 +7,12 @@ import com.snippet.dto.PostDto;
 public interface PostService {
 	
 	/**
+	 * Lista de posts públicos
+	 * @return Lista de posts públicos
+	 */
+	public List<PostDto> findAllPosts();
+	
+	/**
 	 * Lista de posts del usuario
 	 * 
 	 * @return Lista de posts
@@ -47,7 +53,7 @@ public interface PostService {
 	 *
 	 * @param id del post a eliminar
 	 */
-	public void deletePostById(Long id);
+	public void deletePostByPostId(String postId);
 	
 	
 

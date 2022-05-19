@@ -1,6 +1,6 @@
 import axios from "axios";
 import jwt_decode from 'jwt-decode';
-import { LOGIN_ENDPOINT, REGISTER_ENDPOINT } from "../constants/endpoints";
+import { LOGIN, USERS } from "../constants/endpoints";
 import { setTokenAxios } from "../helpers/helpers";
 import { setStateAuthReducer } from "../reducers/authReducer";
 
@@ -10,11 +10,11 @@ import { setStateAuthReducer } from "../reducers/authReducer";
 export const loginAction = (user) => dispatch => {
 
     return new Promise((resolve, reject)=>{
-        axios.post(LOGIN_ENDPOINT, user, {
+        axios.post(LOGIN, user, {
             headers: { 'Accept' : 'application/json', 'ContentType': 'application/json' }
         }).then(response => {
 
-            const { authorization, userId } = response.headers;
+            const { authorization } = response.headers;
 
             // Se guarda el token en el localStorage
             localStorage.setItem('jwtToken', authorization);
@@ -58,7 +58,7 @@ export const logoutAction = () => dispatch => {
  export const registerAction = (user) => dispatch => {
 
     return new Promise((resolve, reject)=>{
-        axios.post(REGISTER_ENDPOINT, user, {
+        axios.post(USERS, user, {
             headers: { 'Accept' : 'application/json', 'ContentType': 'application/json' }
         }).then(response => {
 

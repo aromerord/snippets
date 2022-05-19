@@ -38,8 +38,7 @@ export const LoginDialog = (props) => {
     setErrors({});
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
 
     let errors = {}
 
@@ -77,13 +76,12 @@ export const LoginDialog = (props) => {
   return (
 
     <Dialog fullWidth scroll='paper' maxWidth='xs' open={openLogin} onClose={handleClose}>
-      <DialogTitle>Iniciar sesión</DialogTitle>
+      <DialogTitle>Identificarse</DialogTitle>
       <DialogContent>
 
-        <Box>
+        <Box sx={{ mt: 1 }}>
           <TextField
             fullWidth
-            size="small"
             label="Email"
             variant="outlined"
             helperText={errors?.email}
@@ -95,7 +93,6 @@ export const LoginDialog = (props) => {
         <Box sx={{ mt: 2 }}>
           <TextField
             fullWidth
-            size="small"
             label="Contraseña"
             variant="outlined"
             helperText={errors?.password}
@@ -106,7 +103,7 @@ export const LoginDialog = (props) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancelar</Button>
-        <Button onClick={handleSubmit}>Aceptar</Button>
+        <Button variant="contained" onClick={handleSubmit}>Acceder</Button>
       </DialogActions>
     </Dialog>
 

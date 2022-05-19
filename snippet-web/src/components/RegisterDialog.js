@@ -19,7 +19,6 @@ export const RegisterDialog = (props) => {
 
     const { openRegister, setOpenRegister } = props;
     const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({});
@@ -35,21 +34,18 @@ export const RegisterDialog = (props) => {
 
     const handleClose = () => {
         setOpenRegister(false);
+        setFirstName('');
         setEmail('');
         setPassword('');
         setErrors({});
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleRegister = (e) => {
 
         let errors = {}
 
         if (validator.isEmpty(firstName)) {
             errors.firstName = 'El nombre no puede estar vacío.';
-        }
-        if (validator.isEmpty(lastName)) {
-            errors.lastName = 'Los apellidos no pueden estar vacios.';
         }
         if (!validator.isEmail(email)) {
             errors.email = 'El email no es válido.';
@@ -65,7 +61,6 @@ export const RegisterDialog = (props) => {
 
             const user = {
                 firstName: firstName,
-                lastName: lastName,
                 email: email,
                 password: password
             }
@@ -82,7 +77,6 @@ export const RegisterDialog = (props) => {
 
                 setErrors({});
                 setFirstName('');
-                setLastName('');
                 setPassword('');
                 setEmail('');
 
@@ -102,11 +96,10 @@ export const RegisterDialog = (props) => {
         <Dialog fullWidth maxWidth='xs' open={openRegister} onClose={handleClose}>
             <DialogTitle>Crear cuenta</DialogTitle>
             <DialogContent >
-                <Box>
+                <Box sx={{ mt: 1 }}>
                     <TextField
                         className='mt-3'
                         fullWidth
-                        size="small"
                         label="Nombre"
                         variant="outlined"
                         helperText={errors?.firstName}
@@ -118,19 +111,6 @@ export const RegisterDialog = (props) => {
                     <TextField
                         className='mt-3'
                         fullWidth
-                        size="small"
-                        label="Apellidos"
-                        variant="outlined"
-                        helperText={errors?.lastName}
-                        error={errors?.lastName}
-                        value={lastName}
-                        onChange={e => setLastName(e.target.value)} />
-                </Box>
-                <Box sx={{ mt: 2 }}>
-                    <TextField
-                        className='mt-3'
-                        fullWidth
-                        size="small"
                         label="Email"
                         variant="outlined"
                         helperText={errors?.email}
@@ -142,7 +122,6 @@ export const RegisterDialog = (props) => {
                     <TextField
                         className='mt-3'
                         fullWidth
-                        size="small"
                         label="Contraseña"
                         variant="outlined"
                         helperText={errors?.password}
@@ -154,7 +133,7 @@ export const RegisterDialog = (props) => {
 
             <DialogActions>
                 <Button onClick={handleClose}>Cancelar</Button>
-                <Button onClick={handleSubmit}>Aceptar</Button>
+                <Button variant="contained" onClick={handleRegister}>Registrarse</Button>
             </DialogActions>
         </Dialog>
     )

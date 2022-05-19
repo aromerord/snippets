@@ -1,15 +1,20 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { POSTS } from '../constants/endpoints';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { TableFooter, TablePagination, Typography } from '@mui/material';
 import moment from 'moment';
+import {
+  Paper,
+  Table,
+  TableRow,
+  TableContainer,
+  TableCell,
+  TableBody,
+  TableFooter,
+  TablePagination,
+  Typography
+} from '@mui/material';
+
 
 export const Home = () => {
 
@@ -37,8 +42,8 @@ export const Home = () => {
 
   return (
     <>
-      <Typography sx={{ mb:2 }}  variant="h5" component="div">
-        Últimos posts públicos
+      <Typography sx={{ mb: 2 }} variant="h5" component="div">
+        Posts públicos
       </Typography>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -49,7 +54,7 @@ export const Home = () => {
                   <TableCell component="th" scope="row">
                     <Link to={`/post/${post.postId}`}>{post.title}</Link>
                     <Typography sx={{ fontSize: 14, mt: 1 }} color="text.secondary">
-                      <span>{post.user.firstName} {post.user.lastName}</span> · Creado {moment(post.createdAt).fromNow()}
+                      <span>{post.user.firstName} {post.user?.lastName}</span> · Creado {moment(post.createdAt).fromNow()}
                     </Typography>
 
                   </TableCell>

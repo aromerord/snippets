@@ -40,7 +40,7 @@ public class User implements Serializable {
 	@Column(name = "USER_ID", nullable = false)
 	private String userId;
 	
-	@Column(name = "FIRST_NAME", nullable = false, length = 50)
+	@Column(name = "FIRST_NAME", nullable = true, length = 50)
 	private String firstName;
 	
 	@Column(name = "LAST_NAME", nullable = false, length = 50)

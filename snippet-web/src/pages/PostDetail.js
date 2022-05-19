@@ -38,7 +38,7 @@ export const PostDetail = () => {
                 {post.title}
               </Typography>
               <Typography sx={{ fontSize: 14, mb: 2 }} color="text.secondary" gutterBottom>
-                {post.user.firstName} {post.user.lastName} · Creado {moment(post.createdAt).fromNow()}
+                {post.user.firstName} {post.user?.lastName} · Creado {moment(post.createdAt).fromNow()}
               </Typography>
             </Grid>
             <Grid item xs={2} sx={{ pb: 2,pt:2, display: 'flex', justifyContent: 'flex-end' }}>

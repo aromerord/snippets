@@ -8,6 +8,7 @@ import Container from '@mui/material/Container';
 import { Home } from './pages/Home';
 import { UserPosts } from './pages/UserPosts';
 import { PostDetail } from './pages/PostDetail';
+import { PostForm } from './pages/PostForm';
 
 moment.locale('es');
 
@@ -21,6 +22,8 @@ function App() {
       <Routes>
         <Route exact path='/' element={<Home />}></Route>
         <Route exact path='/post/:id' element={<PostDetail />}></Route>
+        <Route exact path='/editar-post/:id' element={<ProtectedRoute component={PostForm} />}></Route>
+        <Route exact path='/nuevo-post' element={<ProtectedRoute component={PostForm} />}></Route>
         <Route exact path='/posts' element={<ProtectedRoute component={UserPosts} />}></Route>
       </Routes>
       </Container>

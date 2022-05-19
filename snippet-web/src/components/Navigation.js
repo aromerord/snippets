@@ -13,7 +13,7 @@ export const Navigation = () => {
   const [openLogin, setOpenLogin] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
   const login = useSelector(state => state.auth.login);
-  const user = useSelector(state => state.auth.user);
+  // const user = useSelector(state => state.auth.user);
   const dispatch = useDispatch();
 
   return (
@@ -32,8 +32,9 @@ export const Navigation = () => {
         </Box>
         <Box sx={{ marginTop: '5px' }}>
           {!login ?
-            <>  <Button className='cw' onClick={() => setOpenLogin(true)}>Login</Button>
-              <Button className='cw' onClick={() => setOpenRegister(true)}>Registro</Button>
+            <>
+              <Button className='cw' onClick={() => setOpenLogin(true)}>Acceder</Button>
+              <Button className='cw' onClick={() => setOpenRegister(true)}>Registrarse</Button>
             </> :
             <Button className='cw' onClick={() => dispatch(logoutAction())}>Cerrar sesión</Button>}
         </Box>

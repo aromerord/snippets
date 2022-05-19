@@ -14,9 +14,15 @@ public interface PostRepository extends CrudRepository<Post, Long>{
 	
 	public List<Post> findAllPostByUserEmailOrderByCreatedAtDesc(String email);
 	
+	@Query(value="SELECT * FROM post p WHERE p.exposure = :exposure ORDER BY created_at", 
+			nativeQuery = true)
+	public List<Post> findAllPublicPosts(@Param("exposure") String exposure);
+	
 	@Query(value="SELECT * FROM post p WHERE p.exposure = :exposure ORDER BY created_at LIMIT 20", 
 			nativeQuery = true)
 	public List<Post> recentPosts(@Param("exposure") String exposure);
 	
 	public Post findPostByPostId(String postId);
+	
+	public void deletePostByPostId(String postId);
 }

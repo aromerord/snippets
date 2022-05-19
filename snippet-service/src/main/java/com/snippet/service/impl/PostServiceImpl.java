@@ -22,57 +22,64 @@ import com.snippet.service.PostService;
 import com.snippet.service.UserService;
 
 @Service
-public class PostServiceImpl implements PostService{
-	
+public class PostServiceImpl implements PostService {
+
 	@Autowired
 	private PostRepository postRepository;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private ModelMapper mapper;
-	
+
 	@Override
-	public List<PostDto> recentPosts() {
-		List<Post> posts = postRepository.recentPosts("PUBLIC");
-		if(posts != null) {
-			return posts.stream().map(post -> mapper.map(post, PostDto.class))
-					.collect(Collectors.toList());
+	public List<PostDto> findAllPosts() {
+		List<Post> posts = postRepository.findAllPublicPosts("PUBLIC");
+		if (posts != null) {
+			return posts.stream().map(post -> mapper.map(post, PostDto.class)).collect(Collectors.toList());
 		}
 		return Collections.emptyList();
 	}
-	
+
+	@Override
+	public List<PostDto> recentPosts() {
+		List<Post> posts = postRepository.recentPosts("PUBLIC");
+		if (posts != null) {
+			return posts.stream().map(post -> mapper.map(post, PostDto.class)).collect(Collectors.toList());
+		}
+		return Collections.emptyList();
+	}
+
 	@Override
 	public List<PostDto> findAllPostsByUser() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String email = authentication.getPrincipal().toString();
 		List<Post> posts = (List<Post>) postRepository.findAllPostByUserEmailOrderByCreatedAtDesc(email);
-		return posts.stream().map(post -> mapper.map(post, PostDto.class))
-				.collect(Collectors.toList());
+		return posts.stream().map(post -> mapper.map(post, PostDto.class)).collect(Collectors.toList());
 	}
-	
+
 	@Override
 	public PostDto findPostByPostId(String postId) {
 		Post post = postRepository.findPostByPostId(postId);
-		if(post == null) {
+		if (post == null) {
 			throw new NotFoundException("El post con id " + postId + " no existe en la base de datos");
 		} else {
-			if(post.getExposure().equals("PRIVATE")) {
+			if (post.getExposure().equals("PRIVATE")) {
 				Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 				String email = authentication.getPrincipal().toString();
 				UserDto user = userService.findUserByEmail(email);
-				if(user.getId() != post.getUser().getId()) {
+				if (user.getId() != post.getUser().getId()) {
 					throw new ForbiddenException("El usuario no tiene permisos para acceder al post");
 				}
 			}
 			return mapper.map(post, PostDto.class);
 		}
 	}
-	
+
 	@Override
 	public PostDto savePost(PostDto postDto) {
-		
+
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String email = authentication.getPrincipal().toString();
 		UserDto userDto = userService.findUserByEmail(email);
@@ -87,7 +94,7 @@ public class PostServiceImpl implements PostService{
 		}
 		return savedPostDto;
 	}
-	
+
 	@Override
 	public PostDto updatePost(PostDto postDto) {
 		PostDto updatedPostDto = null;
@@ -96,19 +103,18 @@ public class PostServiceImpl implements PostService{
 		String email = authentication.getPrincipal().toString();
 		UserDto userDto = userService.findUserByEmail(email);
 
-		Post post = postRepository.findById(postDto.getId()).orElseThrow(
-				() -> new NotFoundException("El registro con id: " + postDto.getId() + " no existe en la base de datos."));
+		Post post = postRepository.findById(postDto.getId()).orElseThrow(() -> new NotFoundException(
+				"El registro con id: " + postDto.getId() + " no existe en la base de datos."));
 
 		if (userDto.getId() != post.getId()) {
 			throw new ForbiddenException("El usuario no tiene permisos para eliminar el post");
 		}
-
 		try {
 			post.setPostId(postDto.getPostId());
 			post.setTitle(postDto.getTitle());
 			post.setContent(postDto.getContent());
 			post.setExposure(postDto.getExposure());
-			
+
 			Post postSaved = postRepository.save(post);
 			updatedPostDto = mapper.map(postSaved, PostDto.class);
 
@@ -119,35 +125,25 @@ public class PostServiceImpl implements PostService{
 	}
 
 	@Override
-	public void deletePostById(Long id) {
+	public void deletePostByPostId(String postId) {
 		try {
-			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			String email = authentication.getPrincipal().toString();
-			UserDto userDto = userService.findUserByEmail(email);
-			
-			Post post = postRepository.findById(id).orElseThrow(
-					() -> new NotFoundException("El registro con id: " + id + " no existe en la base de datos."));
-			
-			if(userDto.getId() != post.getId()) {
-				throw new ForbiddenException("El usuario no tiene permisos para eliminar el post");
+			Post post = postRepository.findPostByPostId(postId);
+			if (post == null) {
+				throw new NotFoundException("El post con postId " + postId + " no existe en la base de datos");
+			} else {
+				Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+				String email = authentication.getPrincipal().toString();
+				UserDto user = userService.findUserByEmail(email);
+				if (user.getId() != post.getUser().getId()) {
+					throw new ForbiddenException("El usuario no tiene permisos para eliminar al post");
+				}
+				postRepository.deleteById(post.getId());
 			}
-			
-			postRepository.deleteById(id);
+
 		} catch (Exception e) {
-			throw new NotFoundException("El registro con id: " + id + " no existe en la base de datos.");
+			throw new NotFoundException("El registro con id: " + postId + " no existe en la base de datos.");
 		}
-		
+
 	}
-
-
-	
-	
-	
-	
-	
-	
-	
-
-
 
 }

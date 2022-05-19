@@ -29,12 +29,22 @@ public class PostController {
 	@Autowired
 	private PostService postService;
 	
-	@ApiOperation(value = "Obtener los últimos posts públicos", response = PostDto.class)
+	@ApiOperation(value = "Obtener todos los posts públicos", response = PostDto.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "La solicitud ha tenido éxito."),
 			@ApiResponse(code = 400, message = "El servidor no pudo interpretar la solicitud."),
 			@ApiResponse(code = 404, message = "Recurso no encontrado."),
 			@ApiResponse(code = 500, message = "Error interno del servidor."), })
 	@GetMapping
+	public ResponseEntity<List<PostDto>> findAllPosts() {
+		return new ResponseEntity<>(postService.findAllPosts(), HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "Obtener los últimos posts públicos", response = PostDto.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "La solicitud ha tenido éxito."),
+			@ApiResponse(code = 400, message = "El servidor no pudo interpretar la solicitud."),
+			@ApiResponse(code = 404, message = "Recurso no encontrado."),
+			@ApiResponse(code = 500, message = "Error interno del servidor."), })
+	@GetMapping("/recent")
 	public ResponseEntity<List<PostDto>> recentPosts() {
 		return new ResponseEntity<>(postService.recentPosts(), HttpStatus.OK);
 	}
@@ -84,14 +94,10 @@ public class PostController {
 			@ApiResponse(code = 400, message = "El servidor no pudo interpretar la solicitud."),
 			@ApiResponse(code = 404, message = "Recurso no encontrado."),
 			@ApiResponse(code = 500, message = "Error interno del servidor."), })
-	@DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Void> deletePostById(@PathVariable Long id) {
-			postService.deletePostById(id);
+	@DeleteMapping("/{postId}")
+	public ResponseEntity<Void> deletePostByPostId(@PathVariable String postId) {
+			postService.deletePostByPostId(postId);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
-	
-
-
-	
 
 }
