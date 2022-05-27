@@ -44,7 +44,7 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public List<PostDto> recentPosts() {
-		List<Post> posts = postRepository.recentPosts("PUBLIC");
+		List<Post> posts = postRepository.recentPosts("public");
 		if (posts != null) {
 			return posts.stream().map(post -> mapper.map(post, PostDto.class)).collect(Collectors.toList());
 		}
@@ -65,7 +65,7 @@ public class PostServiceImpl implements PostService {
 		if (post == null) {
 			throw new NotFoundException("El post con id " + postId + " no existe en la base de datos");
 		} else {
-			if (post.getExposure().equals("PRIVATE")) {
+			if (post.getExposure().equals("private")) {
 				Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 				String email = authentication.getPrincipal().toString();
 				UserDto user = userService.findUserByEmail(email);

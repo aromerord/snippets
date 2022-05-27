@@ -14,21 +14,22 @@ import {
   TablePagination,
   Typography
 } from '@mui/material';
+import { useSnackbar } from 'notistack';
 
 
 export const Home = () => {
 
+  const { enqueueSnackbar } = useSnackbar();
+  
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   useEffect(() => {
     axios.get(POSTS).then(response => {
       setPosts(response.data);
-      setLoading(false);
     }).catch(error => {
-      setLoading(false);
+      enqueueSnackbar('Se ha producido un error en la aplicación', { variant: 'error' });
     });
   }, [])
 
@@ -54,7 +55,7 @@ export const Home = () => {
                   <TableCell component="th" scope="row">
                     <Link to={`/post/${post.postId}`}>{post.title}</Link>
                     <Typography sx={{ fontSize: 14, mt: 1 }} color="text.secondary">
-                      <span>{post.user.firstName} {post.user?.lastName}</span> · Creado {moment(post.createdAt).fromNow()}
+                      <span>{post.user.firstName} {post?.user?.lastName}</span> · Creado {moment(post.createdAt).fromNow()}
                     </Typography>
 
                   </TableCell>
@@ -65,7 +66,7 @@ export const Home = () => {
           <TableFooter>
             <TableRow>
               <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
+                rowsPerPageOptions={[10, 25]}
                 count={posts.length}
                 rowsPerPage={rowsPerPage}
                 page={page}

@@ -23,5 +23,6 @@ public class PostDto implements Serializable {
 	private Date createdAt;
 	private UserDto user;
 	private String exposure;
+	private String language;
 
 }

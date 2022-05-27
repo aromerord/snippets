@@ -57,5 +57,8 @@ public class Post implements Serializable {
 	
 	@Column(name = "EXPOSURE")
 	private String exposure;
+	
+	@Column(name = "LANGUAGE")
+	private String language;
 
 }

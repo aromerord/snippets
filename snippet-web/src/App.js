@@ -19,13 +19,13 @@ function App() {
     <>
       <Navigation />
       <Container className='mt-80'>
-      <Routes>
-        <Route exact path='/' element={<Home />}></Route>
-        <Route exact path='/post/:id' element={<PostDetail />}></Route>
-        <Route exact path='/editar-post/:id' element={<ProtectedRoute component={PostForm} />}></Route>
-        <Route exact path='/nuevo-post' element={<ProtectedRoute component={PostForm} />}></Route>
-        <Route exact path='/posts' element={<ProtectedRoute component={UserPosts} />}></Route>
-      </Routes>
+        <Routes>
+          <Route exact path='/' element={<Home />}></Route>
+          <Route exact path='/post/:id' element={<PostDetail />}></Route>
+          <Route exact path='/editar-post/:id' element={<ProtectedRoute component={PostForm} />}></Route>
+          <Route exact path='/nuevo-post' element={<ProtectedRoute component={PostForm} />}></Route>
+          <Route exact path='/posts' element={<ProtectedRoute component={UserPosts} />}></Route>
+        </Routes>
       </Container>
     </>
   );

@@ -34,3 +34,6 @@
 
 - Copiar texto al portapapeles
 `react-copy-to-clipboard`
+
+- Notificaciones
+`npm install notistack`

@@ -16,12 +16,12 @@ import {
   Typography,
   Button,
   IconButton,
-  Grid,
-  Snackbar
+  Grid
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { PostDialog } from '../components/PostDialog';
+import { useSnackbar } from 'notistack';
 
 export const UserPosts = (props) => {
 
@@ -30,34 +30,45 @@ export const UserPosts = (props) => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [openPostDialog, setOpenPostDialog] = useState(false);
   const [postId, setPostId] = useState();
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     findAllPostsByUser();
   }, []);
 
-
+  /**
+   * Obtiene todos los posts de un usuario
+   */
   const findAllPostsByUser = () => {
     axios.get(POSTS_BY_USER).then(response => {
       setPosts(response.data);
     }).catch(error => {
-
+      enqueueSnackbar('Se ha producido un error en la aplicación', { variant: 'error' });
     });
   }
 
+  /**
+   * Abre el dialog para eliminar un post
+   */
+  const handleDelete = (id) => {
+    setPostId(id);
+    setOpenPostDialog(true);
+  }
+
+  /**
+   * Gestiona la paginación de la tabla
+   */
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
+  /**
+   * Gestiona la paginación de la tabla
+   */
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
-  const handleDelete = (id) => {
-    console.log('id', id)
-    setPostId(id);
-    setOpenPostDialog(true);
-  }
 
   return (
     <>
@@ -80,6 +91,8 @@ export const UserPosts = (props) => {
           <TableHead>
             <TableRow>
               <TableCell>Nombre</TableCell>
+              <TableCell>Lenguaje</TableCell>
+              <TableCell>Tipo</TableCell>
               <TableCell>Fecha</TableCell>
               <TableCell>Acciones</TableCell>
             </TableRow>
@@ -88,9 +101,9 @@ export const UserPosts = (props) => {
             {posts.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((post) => (
                 <TableRow key={post.postId}>
-                  <TableCell component="th" scope="row">
-                    {post.title}
-                  </TableCell>
+                  <TableCell> {post.title} </TableCell>
+                  <TableCell> JavaScript </TableCell>
+                  <TableCell> {post.exposure === 'public' ? 'Público' : 'Privado'} </TableCell>
                   <TableCell>{moment(post.createdAt).format('DD/MM/yy')}</TableCell>
                   <TableCell>
                     <IconButton size='sm' color="error" onClick={() => handleDelete(post.postId)}>

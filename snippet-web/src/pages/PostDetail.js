@@ -10,20 +10,23 @@ import { downloadFile } from '../helpers/helpers';
 import { Card, Grid, CardContent, IconButton, Typography } from '@mui/material';
 import DownloadIcon from '@mui/icons-material/Download';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import { useSnackbar } from 'notistack';
 
 export const PostDetail = () => {
 
   const { id } = useParams();
   const navigate = useNavigate();
   const [post, setPost] = useState();
-  const [loading, setLoading] = useState(true);
+  const { enqueueSnackbar } = useSnackbar();
 
+  /**
+   * Obtiene el post por el postId
+   */
   useEffect(() => {
     axios.get(`${POSTS}/${id}`).then(response => {
       setPost(response.data);
-      setLoading(false);
     }).catch(error => {
-      setLoading(false);
+      enqueueSnackbar('Se ha producido un error en la aplicación', { variant: 'error' });
       navigate('/');
     });
   }, []);
@@ -50,7 +53,7 @@ export const PostDetail = () => {
               <CopyToClipboard
                 text={post.content}
                 onCopy={() => {
-                  console.log('copiado')
+                  enqueueSnackbar('Post copiado al portapapeles', { variant: 'success' });
                 }}>
                 <IconButton color="primary" size="small"> <ContentCopyIcon /> </IconButton>
               </CopyToClipboard>
