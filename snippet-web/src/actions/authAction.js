@@ -3,6 +3,7 @@ import jwt_decode from 'jwt-decode';
 import { LOGIN, USERS } from "../constants/endpoints";
 import { setTokenAxios } from "../helpers/helpers";
 import { setStateAuthReducer } from "../reducers/authReducer";
+import { setStateUserPostsReducer } from "../reducers/userPostsReducer";
 
 /**
  * Acción de login para el authReducer
@@ -25,7 +26,7 @@ export const loginAction = (user) => dispatch => {
             // Se decodifica el token 
             const decoded = jwt_decode(authorization);
 
-            // y se guarda el state del authReducer
+            // se crea el state para el authReducer y se envía para su actualización
             const state = setStateAuthReducer({ user: decoded, login: true })
             dispatch(state);
 
@@ -48,8 +49,12 @@ export const logoutAction = () => dispatch => {
     setTokenAxios(false);
 
     // Se elimina el usuario del state
-    const state = setStateAuthReducer({ user: {}, login: false })
-    dispatch(state);
+    const stateAuth = setStateAuthReducer({ user: {}, login: false })
+    dispatch(stateAuth);
+
+    // Se eliminan los posts del state
+    const statePosts = setStateUserPostsReducer({ posts: {}, fetched: false })
+    dispatch(statePosts);
 }
 
 /**

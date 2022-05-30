@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { isObjectEmpty } from '../helpers/helpers';
 import validator from 'validator';
 import { loginAction, registerAction } from '../actions/authAction';
-
 import {
     Box,
     Button,
@@ -32,14 +31,9 @@ export const RegisterDialog = (props) => {
         }
     }, [login]);
 
-    const handleClose = () => {
-        setOpenRegister(false);
-        setFirstName('');
-        setEmail('');
-        setPassword('');
-        setErrors({});
-    };
-
+    /**
+     * Registro de usuarios. Tras el registro, se hace login
+     */
     const handleRegister = (e) => {
 
         let errors = {}
@@ -91,6 +85,17 @@ export const RegisterDialog = (props) => {
         }
 
     }
+
+    /**
+     * Cierra el dialog del registro Y limpia las variables
+     */
+    const handleClose = () => {
+        setOpenRegister(false);
+        setFirstName('');
+        setEmail('');
+        setPassword('');
+        setErrors({});
+    };
 
     return (
         <Dialog fullWidth maxWidth='xs' open={openRegister} onClose={handleClose}>

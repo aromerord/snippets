@@ -12,15 +12,17 @@ import {
   TableBody,
   TableFooter,
   TablePagination,
-  Typography
+  Typography,
+  TableHead,
+  IconButton
 } from '@mui/material';
 import { useSnackbar } from 'notistack';
-
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 export const Home = () => {
 
   const { enqueueSnackbar } = useSnackbar();
-  
+
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -48,16 +50,27 @@ export const Home = () => {
       </Typography>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Nombre</TableCell>
+              <TableCell>Lenguaje</TableCell>
+              <TableCell>Autor</TableCell>
+              <TableCell>Fecha</TableCell>
+              <TableCell>Acciones</TableCell>
+            </TableRow>
+          </TableHead>
           <TableBody>
             {posts.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((post) => (
                 <TableRow key={post.postId}>
-                  <TableCell component="th" scope="row">
-                    <Link to={`/post/${post.postId}`}>{post.title}</Link>
-                    <Typography sx={{ fontSize: 14, mt: 1 }} color="text.secondary">
-                      <span>{post.user.firstName} {post?.user?.lastName}</span> · Creado {moment(post.createdAt).fromNow()}
-                    </Typography>
-
+                  <TableCell style={{width: '30%'}}> {post.title} </TableCell>
+                  <TableCell> {post.language} </TableCell>
+                  <TableCell> {post.user.firstName} {post?.user?.lastName} </TableCell>
+                  <TableCell> {moment(post.createdAt).format('DD/MM/yy')} </TableCell>
+                  <TableCell>
+                    <IconButton component={Link} to={`/post/${post.postId}`} size='sm' color="primary">
+                      <VisibilityIcon />
+                    </IconButton>
                   </TableCell>
                 </TableRow>
               ))}

@@ -23,7 +23,7 @@ export const authReducer = (state = initialState, action) => {
 }
 
 /**
- * Devuelve un objeto con el state del authReducer
+ * Crea el state del authReducer
  */
 export const setStateAuthReducer = ({user, login}) => {
     let state = {

@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import {
   Button,
   FormControl,
@@ -12,19 +14,19 @@ import {
   TextField,
   Typography
 } from '@mui/material'
-import React, { useEffect, useState } from 'react'
 import { isObjectEmpty } from '../helpers/helpers';
 import validator from 'validator';
-import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { POSTS } from '../constants/endpoints';
 import { useSnackbar } from 'notistack';
+import { useDispatch } from 'react-redux';
 
 export const PostForm = () => {
 
   const navigate = useNavigate();
   const { id } = useParams();
   const { enqueueSnackbar } = useSnackbar();
+  const dispatch = useDispatch();
 
   const [post, setPost] = useState();
   const [title, setTitle] = useState('');

@@ -1,21 +1,42 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Snackbar, Typography } from '@mui/material'
+import React from 'react';
 import axios from 'axios';
-import React, { useState } from 'react'
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    Typography
+} from '@mui/material'
 import { POSTS } from '../constants/endpoints';
+import { userPostsAction } from '../actions/userPostsAction';
+import { useDispatch } from 'react-redux';
+import { useSnackbar } from 'notistack';
 
 export const PostDialog = (props) => {
 
-    const { openPostDialog, setOpenPostDialog, postId, findAllPostsByUser } = props;
+    const { openPostDialog, setOpenPostDialog, postId } = props;
+    const dispatch = useDispatch();
+    const { enqueueSnackbar } = useSnackbar();
 
+    /**
+     * Eliminar post
+     */
     const handleDelete = () => {
         axios.delete(`${POSTS}/${postId}`).then(() => {
             setOpenPostDialog(false);
-            findAllPostsByUser();
+            // Se recargan los posts
+            dispatch(userPostsAction());
+            enqueueSnackbar('Post eliminado con éxito', { variant: 'success' });
         }).catch(error => {
             setOpenPostDialog(false);
+            enqueueSnackbar('Se ha producido un error en la aplicación', { variant: 'error' });
         });
     }
 
+    /**
+     * Cierra el dialog
+     */
     const handleClose = () => {
         setOpenPostDialog(false);
     }

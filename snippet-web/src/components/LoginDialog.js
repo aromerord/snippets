@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { isObjectEmpty } from '../helpers/helpers';
 import validator from 'validator';
 import { loginAction } from '../actions/authAction';
+import { Box } from '@mui/system';
 import {
   Button,
   Dialog,
@@ -12,7 +13,6 @@ import {
   DialogTitle,
   TextField
 } from '@mui/material';
-import { Box } from '@mui/system';
 
 export const LoginDialog = (props) => {
 
@@ -30,14 +30,9 @@ export const LoginDialog = (props) => {
     }
   }, [login]);
 
-
-  const handleClose = () => {
-    setOpenLogin(false);
-    setEmail('');
-    setPassword('');
-    setErrors({});
-  };
-
+  /**
+   * Login de usuarios
+   */
   const handleSubmit = () => {
 
     let errors = {}
@@ -72,6 +67,16 @@ export const LoginDialog = (props) => {
     }
 
   }
+
+  /**
+   * Cierra el dialog del login y limpia las variables
+   */
+     const handleClose = () => {
+      setOpenLogin(false);
+      setEmail('');
+      setPassword('');
+      setErrors({});
+    };
 
   return (
 

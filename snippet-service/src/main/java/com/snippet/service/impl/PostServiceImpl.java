@@ -106,15 +106,15 @@ public class PostServiceImpl implements PostService {
 		Post post = postRepository.findById(postDto.getId()).orElseThrow(() -> new NotFoundException(
 				"El registro con id: " + postDto.getId() + " no existe en la base de datos."));
 
-		if (userDto.getId() != post.getId()) {
-			throw new ForbiddenException("El usuario no tiene permisos para eliminar el post");
+		if (userDto.getId() != post.getUser().getId()) {
+			throw new ForbiddenException("El usuario no tiene permisos para actualizar el post");
 		}
 		try {
 			post.setPostId(postDto.getPostId());
 			post.setTitle(postDto.getTitle());
 			post.setContent(postDto.getContent());
 			post.setExposure(postDto.getExposure());
-
+			post.setLanguage(postDto.getLanguage());
 			Post postSaved = postRepository.save(post);
 			updatedPostDto = mapper.map(postSaved, PostDto.class);
 
@@ -135,7 +135,7 @@ public class PostServiceImpl implements PostService {
 				String email = authentication.getPrincipal().toString();
 				UserDto user = userService.findUserByEmail(email);
 				if (user.getId() != post.getUser().getId()) {
-					throw new ForbiddenException("El usuario no tiene permisos para eliminar al post");
+					throw new ForbiddenException("El usuario no tiene permisos para eliminar el post");
 				}
 				postRepository.deleteById(post.getId());
 			}
