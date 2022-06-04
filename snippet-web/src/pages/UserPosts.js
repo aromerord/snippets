@@ -22,6 +22,7 @@ import { PostDialog } from '../components/PostDialog';
 import { useSelector, useDispatch } from 'react-redux';
 import { userPostsAction } from '../actions/userPostsAction';
 import { useSnackbar } from 'notistack';
+import { NoPosts } from '../components/NoPosts';
 
 export const UserPosts = (props) => {
 
@@ -85,9 +86,8 @@ export const UserPosts = (props) => {
           </Button>
         </Grid>
       </Grid>
-
-      <TableContainer component={Paper}>
-        {posts &&
+      {posts && posts.length > 0 ?
+        <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
@@ -136,8 +136,9 @@ export const UserPosts = (props) => {
                 />
               </TableRow>
             </TableFooter>
-          </Table>}
-      </TableContainer>
+          </Table>
+        </TableContainer> :
+        <NoPosts />}
 
       <PostDialog
         postId={postId}

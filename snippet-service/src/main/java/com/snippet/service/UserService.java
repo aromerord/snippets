@@ -19,5 +19,12 @@ public interface UserService extends UserDetailsService{
 	 * @return usuario obtenido
 	 */
 	public UserDto findUserByEmail(String email);
+	
+	/**
+	 * Actualizar usuario
+	 * @param userDto
+	 * @return usuario actualizado
+	 */
+	public UserDto updateUser(UserDto userDto);
 
 }

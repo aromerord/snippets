@@ -5,8 +5,6 @@ import { AppBar, Toolbar, Typography, Button, IconButton } from '@mui/material';
 import WifiChannelIcon from '@mui/icons-material/WifiChannel';
 import { Box } from '@mui/system';
 import { logoutAction } from '../actions/authAction';
-import { LoginDialog } from './LoginDialog';
-import { RegisterDialog } from './RegisterDialog';
 
 export const Navigation = () => {
 
@@ -33,14 +31,12 @@ export const Navigation = () => {
         <Box sx={{ marginTop: '5px' }}>
           {!login ?
             <>
-              <Button className='cw' onClick={() => setOpenLogin(true)}>Acceder</Button>
-              <Button className='cw' onClick={() => setOpenRegister(true)}>Registrarse</Button>
+              <Button className='cw' component={Link} to="/login">Acceder</Button>
+              <Button className='cw' component={Link} to="/registro">Registrarse</Button>
             </> :
             <Button className='cw' onClick={() => dispatch(logoutAction())}>Cerrar sesión</Button>}
         </Box>
       </Toolbar>
-      <LoginDialog openLogin={openLogin} setOpenLogin={setOpenLogin} />
-      <RegisterDialog openRegister={openRegister} setOpenRegister={setOpenRegister} />
     </AppBar>
   )
 }

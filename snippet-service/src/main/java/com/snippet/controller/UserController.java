@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -61,6 +62,21 @@ public class UserController {
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserDto> saveUser(@RequestBody UserDto userDto) {
 		return new ResponseEntity<>(userService.saveUser(userDto), HttpStatus.CREATED);
+	}
+	
+	/**
+	 * Actualizar usuario
+	 * @param userDto Objeto con los datos del usuario a actualizar
+	 * @return usuario actualizado
+	 */
+	@ApiOperation(value = "Actualizar usuario.", response = UserDto.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "La solicitud ha tenido éxito."),
+			@ApiResponse(code = 400, message = "El servidor no pudo interpretar la solicitud."),
+			@ApiResponse(code = 404, message = "Recurso no encontrado."),
+			@ApiResponse(code = 500, message = "Error interno del servidor."), })
+	@PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto) {
+		return new ResponseEntity<>(userService.updateUser(userDto), HttpStatus.CREATED);
 	}
 
 }

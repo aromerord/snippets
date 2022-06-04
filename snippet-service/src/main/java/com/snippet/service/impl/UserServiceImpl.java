@@ -64,4 +64,11 @@ public class UserServiceImpl implements UserService {
 		return savedUserDto;
 	}
 
+	@Override
+	public UserDto updateUser(UserDto userDto) {
+		userDto.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+		User user = userRepository.save(mapper.map(userDto, User.class));
+		return mapper.map(user, UserDto.class);
+	}
+
 }

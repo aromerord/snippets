@@ -29,6 +29,10 @@ public class PostController {
 	@Autowired
 	private PostService postService;
 	
+	/**
+	 * Obtener todos los posts públicos
+	 * @return lista de posts públicos
+	 */
 	@ApiOperation(value = "Obtener todos los posts públicos", response = PostDto.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "La solicitud ha tenido éxito."),
 			@ApiResponse(code = 400, message = "El servidor no pudo interpretar la solicitud."),
@@ -39,6 +43,10 @@ public class PostController {
 		return new ResponseEntity<>(postService.findAllPosts(), HttpStatus.OK);
 	}
 	
+	/**
+	 * Obtener los últimos posts públicos
+	 * @return lista de posts
+	 */
 	@ApiOperation(value = "Obtener los últimos posts públicos", response = PostDto.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "La solicitud ha tenido éxito."),
 			@ApiResponse(code = 400, message = "El servidor no pudo interpretar la solicitud."),
@@ -49,6 +57,10 @@ public class PostController {
 		return new ResponseEntity<>(postService.recentPosts(), HttpStatus.OK);
 	}
 
+	/**
+	 * Obtener todos los posts de un usuario
+	 * @return lista de posts
+	 */
 	@ApiOperation(value = "Obtener todos los posts de un usuario", response = PostDto.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "La solicitud ha tenido éxito."),
 			@ApiResponse(code = 400, message = "El servidor no pudo interpretar la solicitud."),
@@ -59,6 +71,11 @@ public class PostController {
 		return new ResponseEntity<>(postService.findAllPostsByUser(), HttpStatus.OK);
 	}
 	
+	/**
+	 * Obtener post por el postId
+	 * @param postId
+	 * @return post obtenido
+	 */
 	@ApiOperation(value = "Obtener post por el postId", response = PostDto.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "La solicitud ha tenido éxito."),
 			@ApiResponse(code = 400, message = "El servidor no pudo interpretar la solicitud."),
@@ -69,6 +86,11 @@ public class PostController {
 		return new ResponseEntity<>(postService.findPostByPostId(postId), HttpStatus.OK);
 	}
 
+	/**
+	 * Crear post
+	 * @param postDto objeto con los datos del post a crear
+	 * @return objeto creado
+	 */
 	@ApiOperation(value = "Crear post", response = PostDto.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "La solicitud ha tenido éxito."),
 			@ApiResponse(code = 400, message = "El servidor no pudo interpretar la solicitud."),
@@ -79,6 +101,11 @@ public class PostController {
 		return new ResponseEntity<>(postService.savePost(postDto), HttpStatus.CREATED);
 	}
 	
+	/**
+	 * Actualizar post
+	 * @param postDto objeto con los datos del post a actualizar
+	 * @return post actualizado
+	 */
 	@ApiOperation(value = "Actualizar post", response = PostDto.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "La solicitud ha tenido éxito."),
 			@ApiResponse(code = 400, message = "El servidor no pudo interpretar la solicitud."),
@@ -89,6 +116,10 @@ public class PostController {
 		return new ResponseEntity<>(postService.updatePost(postDto), HttpStatus.OK);
 	}
 	
+	/**
+	 * Eliminar post
+	 * @param postId
+	 */
 	@ApiOperation(value = "Eliminar post", response = Void.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "La solicitud ha tenido éxito."),
 			@ApiResponse(code = 400, message = "El servidor no pudo interpretar la solicitud."),

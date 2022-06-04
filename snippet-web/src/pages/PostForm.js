@@ -149,9 +149,11 @@ export const PostForm = () => {
               <Grid item xs={12} sm={12}>
                 <TextField
                   fullWidth
+                  required
                   label="Título"
                   variant="outlined"
                   name='title'
+                  type="text"
                   helperText={errors?.title}
                   error={errors?.title}
                   value={title}
@@ -164,6 +166,7 @@ export const PostForm = () => {
                   <Select
                     labelId="simple-select-label"
                     variant="outlined"
+                    required
                     label="Lenguaje"
                     fullWidth
                     name="language"
@@ -191,6 +194,7 @@ export const PostForm = () => {
               <Grid item xs={12} sm={12}>
                 <TextField
                   fullWidth
+                  required
                   label="Contenido"
                   multiline
                   rows={10}
