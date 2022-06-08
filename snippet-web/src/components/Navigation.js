@@ -8,8 +8,7 @@ import {
   Button,
   IconButton,
   Menu,
-  MenuItem,
-  Avatar
+  MenuItem
 } from '@mui/material';
 import WifiChannelIcon from '@mui/icons-material/WifiChannel';
 import { Box } from '@mui/system';
@@ -19,7 +18,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 export const Navigation = () => {
 
   const login = useSelector(state => state.auth.login);
-  // const user = useSelector(state => state.auth.user);
+  const user = useSelector(state => state.auth.user);
   const dispatch = useDispatch();
   const [openUserMenu, setOpenUserMenu] = useState(null);
   const [openMenu, setOpenMenu] = useState(null);
@@ -32,7 +31,7 @@ export const Navigation = () => {
           <IconButton component={Link} to="/" className='cw'>
             <WifiChannelIcon />
           </IconButton>
-          <Typography variant="h6" component="div" style={{ marginTop: '5px' }}>
+          <Typography variant="h6" component="div" style={{ marginTop: '3px' }}>
             Snippets
           </Typography>
         </Box>
@@ -56,24 +55,33 @@ export const Navigation = () => {
             open={Boolean(openMenu)}
             onClose={() => setOpenMenu(null)}>
             <MenuItem component={Link} to="/">
-              <Typography textAlign="center">Home</Typography>
+              <Typography textAlign="center" onClick={() => setOpenMenu(null)}>Home</Typography>
             </MenuItem>
-            <MenuItem component={Link} to="/posts">
+            <MenuItem component={Link} to="/posts" onClick={() => setOpenMenu(null)}>
               <Typography textAlign="center">Posts</Typography>
             </MenuItem>
           </Menu>
         </Box>
 
+        <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <IconButton component={Link} to="/" className='cw'>
+            <WifiChannelIcon />
+          </IconButton>
+          <Typography variant="h6" component="div" style={{ marginTop: '3px' }}>
+            Snippets
+          </Typography>
+        </Box>
+
         {!login ?
-          <Box sx={{ marginTop: '5px' }}>
+          <Box >
             <Button className='cw' component={Link} to="/login">Acceder</Button>
             <Button className='cw' component={Link} to="/registro">Registrarse</Button>
           </Box>
           :
-          <Box sx={{ flexGrow: 0 }}>
-            <IconButton onClick={(e) => setOpenUserMenu(e.currentTarget)} sx={{ p: 0 }}>
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-            </IconButton>
+          <Box sx={{ flexGrow: 0 }} >
+            <Button className='cw' onClick={(e) => setOpenUserMenu(e.currentTarget)} sx={{ p: 0 }}>
+              {user.sub}
+            </Button>
             <Menu
               sx={{ mt: '45px' }}
               keepMounted
@@ -82,10 +90,10 @@ export const Navigation = () => {
               transformOrigin={{ vertical: 'top', horizontal: 'right' }}
               open={Boolean(openUserMenu)}
               onClose={() => setOpenUserMenu(null)}>
-              <MenuItem component={Link} to="/perfil">
-                <Typography textAlign="center">Perfil</Typography>
-              </MenuItem>
-              <MenuItem onClick={() => dispatch(logoutAction())}>
+              <MenuItem onClick={() => {
+                dispatch(logoutAction());
+                setOpenUserMenu(null);
+              }}>
                 <Typography textAlign="center">Cerrar sesión</Typography>
               </MenuItem>
             </Menu>
